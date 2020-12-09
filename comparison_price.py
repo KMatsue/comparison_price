@@ -14,7 +14,7 @@ def get_rakuten(keyword):
 
     for item in items:
         title = item.select_one('.title').text
-        price = item.select_one('.important').text
+        price = item.select_one('.important').text.replace('円', '').replace(',', '')
         price_list.append(price)
         print(item_number)
         print(title)
@@ -22,7 +22,7 @@ def get_rakuten(keyword):
         item_number += 1
 
     selected_item_number = int(input('楽天：商品番号を入力してください\n'))
-    selected_price = price_list[selected_item_number - 1]
+    selected_price = int(price_list[selected_item_number - 1])
     return selected_price
 
 
@@ -38,7 +38,7 @@ def get_yahoo(keyword):
 
     for item in items:
         title = item.select_one('._2EW-04-9Eayr').text
-        price = item.select_one('._2jgEMnhQANtx').text
+        price = item.select_one('._2jgEMnhQANtx').text.replace('円', '').replace(',', '')
         price_list.append(price)
         # print(item.text)
         print(item_number)
@@ -47,7 +47,7 @@ def get_yahoo(keyword):
         item_number += 1
 
     select_item_number = int(input('Yahoo:商品番号を入力してください\n'))
-    select_item = price_list[select_item_number - 1]
+    select_item = int(price_list[select_item_number - 1])
     return select_item
 
 
@@ -65,11 +65,11 @@ def main():
 
     rakuten_price = get_rakuten(keyword)
     yahoo_price = get_yahoo(keyword)
-    print(rakuten_price)
-    print(type(yahoo_price))
+    print(f'楽天：{rakuten_price}円')
+    print(f'Yahoo：{yahoo_price}円')
+    print()
     print(comparison_price(rakuten_price, yahoo_price))
 
 
 if __name__ == '__main__':
     main()
-# pythonチュートリアル
