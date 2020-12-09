@@ -9,7 +9,7 @@ def get_rakuten(keyword):
     soup = BeautifulSoup(html, 'html.parser')
     items = soup.select('.searchresultitem')
 
-    item_number = 1  #
+    item_number = 1
     price_list = []
 
     for item in items:
@@ -23,14 +23,41 @@ def get_rakuten(keyword):
 
     selected_item_number = int(input('楽天：商品番号を入力してください\n'))
     selected_price = price_list[selected_item_number - 1]
-    # print(selected_price)
     return selected_price
+
+
+def get_yahoo(keyword):
+    url = f'https://shopping.yahoo.co.jp/search?p={keyword}&X=2&ship=on'
+    response = requests.get(url)
+    html = response.text
+    soup = BeautifulSoup(html, 'html.parser')
+    items = soup.select('._2W0PXaK-syIW')
+
+    item_number = 1
+    price_list = []
+
+    for item in items:
+        title = item.select_one('._2EW-04-9Eayr').text
+        price = item.select_one('._2jgEMnhQANtx').text
+        price_list.append(price)
+        # print(item.text)
+        print(item_number)
+        print(title)
+        print(price + '\n')
+        item_number += 1
+
+    select_item_number = int(input('Yahoo:商品番号を入力してください\n'))
+    select_item = price_list[select_item_number - 1]
+    return select_item
+
 
 def main():
     keyword = input('検索ワードをよろしく：\n')
-    # print(get_rakuten(keyword))
+
     rakuten_price = get_rakuten(keyword)
+    yahoo_price = get_yahoo(keyword)
     print(rakuten_price)
+    print(yahoo_price)
 
 
 if __name__ == '__main__':
