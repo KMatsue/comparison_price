@@ -51,13 +51,23 @@ def get_yahoo(keyword):
     return select_item
 
 
+def comparison_price(rakuten_price, yahoo_price):
+    if rakuten_price > yahoo_price:
+        return f'Yahooの方が安い'
+    if yahoo_price > rakuten_price:
+        return f'楽天の方が安い'
+    else:
+        return f'同じ値段'
+
+
 def main():
     keyword = input('検索ワードをよろしく：\n')
 
     rakuten_price = get_rakuten(keyword)
     yahoo_price = get_yahoo(keyword)
     print(rakuten_price)
-    print(yahoo_price)
+    print(type(yahoo_price))
+    print(comparison_price(rakuten_price, yahoo_price))
 
 
 if __name__ == '__main__':
